@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ڈاکٹر کالونی نارووال - پراپرٹی CRM پورٹل</title>
+
+    <!-- Bootstrap 5 RTL & FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-dark: #1e293b;
+            --border-color: #334155;
+            --accent-gold: #fbbf24;
+            --accent-hover: #d97706;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .text-muted { color: var(--text-muted) !important; }
+
+        .stat-card {
+            background-color: var(--card-dark);
+            border: 1px solid var(--accent-gold);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent-gold);
+            transform: translateY(-2px);
+        }
+
+        /* ڈیش بورڈ سرخیوں کا مخصوص سفید رنگ */
+        .dashboard-label {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .sidebar {
+            background-color: var(--card-dark);
+            border-left: 1px solid var(--border-color);
+            min-height: 100vh;
+        }
+
+        .nav-btn {
+            color: var(--text-muted);
+            border-radius: 8px;
+            padding: 12px 16px;
+            width: 100%;
+            text-align: right;
+            transition: all 0.2s ease;
+            background: transparent;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background-color: rgba(251, 191, 36, 0.15);
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        .table-custom {
+            color: var(--text-light);
+            background-color: var(--card-dark);
+            border-color: var(--border-color);
+            --bs-table-bg: var(--card-dark);
+            --bs-table-color: var(--text-light);
+        }
+
+        .table-custom th {
+            background-color: rgba(15, 23, 42, 0.9);
+            color: var(--accent-gold);
+            border-color: var(--border-color);
+            font-weight: 700;
+        }
+
+        .table-custom td {
+            border-color: var(--border-color);
+            vertical-align: middle;
+        }
+
+        .btn-gold {
+            background-color: var(--accent-gold);
+            color: #000;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+        }
+
+        .btn-gold:hover {
+            background-color: var(--accent-hover);
+            color: #fff;
+        }
+
+        .btn-gold:disabled { opacity: 0.7; }
+
+        /* فارم لیبلز کا واضح سفید رنگ */
+        .form-label-custom {
+            color: #ffffff !important;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .form-control, .form-select {
+            background-color: #0f172a;
+            border: 1px solid var(--border-color);
+            color: #ffffff !important;
+            border-radius: 8px;
+        }
+
+        .form-control::placeholder { color: #64748b; }
+
+        .form-control:focus, .form-select:focus {
+            background-color: #0f172a;
+            border-color: var(--accent-gold);
+            color: #ffffff !important;
+            box-shadow: 0 0 0 0.25rem rgba(251, 191, 36, 0.25);
+        }
+
+        .modal-content {
+            background-color: var(--card-dark);
+            color: var(--text-light);
+            border: 1px solid var(--accent-gold);
+            border-radius: 12px;
+        }
+
+        .modal-header, .modal-footer {
+            border-color: var(--border-color);
+        }
+
+        .grid-plot {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background-color: var(--card-dark);
+        }
+
+        .grid-plot.available {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .grid-plot.installment {
+            border-color: var(--accent-gold);
+            background: rgba(251, 191, 36, 0.1);
+        }
+
+        .grid-plot.sold {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .grid-plot:hover {
+            transform: scale(1.03);
+        }
+
+        /* Amount colors */
+        .val-gold { color: #fbbf24 !important; font-weight: 800; }
+        .val-green { color: #22c55e !important; font-weight: 800; }
+        .val-red { color: #ef4444 !important; font-weight: 800; }
+        .val-white { color: #ffffff !important; font-weight: 800; }
+
+        /* ٹوسٹ نوٹیفکیشن */
+        #toastBox {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .app-toast {
+            background: var(--card-dark);
+            border: 1px solid var(--accent-gold);
+            color: var(--text-light);
+            padding: 12px 18px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            font-weight: 600;
+        }
+        .app-toast.error { border-color: #ef4444; }
+    </style>
+</head>
+<body>
+
+    <!-- لاگ ان اسکرین -->
+    <div id="loginScreen" class="d-flex align-items-center justify-content-center min-vh-100">
+        <div class="stat-card" style="width: 100%; max-width: 420px;">
+            <div class="text-center mb-4">
+                <i class="fas fa-city text-warning fa-3x mb-2"></i>
+                <h3 class="fw-bold text-warning">ڈاکٹر کالونی نارووال</h3>
+                <p class="text-muted small">پراپرٹی سی آر ایم پورٹل</p>
+            </div>
+            <form onsubmit="handleLogin(event)">
+                <div class="mb-3">
+                    <label class="form-label-custom">ای میل (Email)</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="admin@drcolony.com" required autocomplete="username">
+                </div>
+                <div class="mb-4">
+                    <label class="form-label-custom">پاس ورڈ (Password)</label>
+                    <input type="password" id="loginPass" class="form-control" placeholder="******" required autocomplete="current-password">
+                </div>
+                <div id="loginError" class="text-danger small mb-3 d-none"></div>
+                <button type="submit" id="loginBtn" class="btn btn-gold w-100 py-2 mb-3">لاگ ان کریں <i class="fas fa-sign-in-alt ms-1"></i></button>
+                <div class="text-center">
+                    <small class="text-muted">ڈویلپر: محمد عرفان (03008468121)</small>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- مین ڈیش بورڈ -->
+    <div id="dashboardApp" class="d-none">
+        <div class="container-fluid">
+            <div class="row">
+
+                <!-- سائیڈ بار -->
+                <div class="col-md-3 col-lg-2 sidebar p-3 d-flex flex-column">
+                    <div class="d-flex align-items-center gap-2 mb-4 px-2">
+                        <i class="fas fa-building text-warning fa-2x"></i>
+                        <div>
+                            <h6 class="fw-bold text-warning mb-0">ڈاکٹر کالونی</h6>
+                            <small class="text-muted" id="userRoleBadge">ایڈمن پینل</small>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column gap-2">
+                        <button class="nav-btn active" data-tab="plots" onclick="switchTab('plots')"><i class="fas fa-layer-group"></i> پلاٹ انوینٹری</button>
+                        <button class="nav-btn" data-tab="booking-map" onclick="switchTab('booking-map')"><i class="fas fa-th"></i> بکنگ میپ</button>
+                        <button class="nav-btn" data-tab="ledger" onclick="switchTab('ledger')"><i class="fas fa-file-invoice-dollar"></i> لیجر & وصولی</button>
+                        <button class="nav-btn admin-only-feature" data-tab="users" onclick="switchTab('users')"><i class="fas fa-users-cog"></i> یوزر مینجمنٹ</button>
+                        <hr class="border-secondary my-2">
+                        <button class="nav-btn text-danger" onclick="logout()"><i class="fas fa-power-off"></i> لاگ آؤٹ</button>
+                    </div>
+
+                    <div class="mt-auto pt-4 text-center">
+                        <small class="text-muted d-block">ڈویلپر: محمد عرفان</small>
+                        <small class="text-warning">0300-8468121</small>
+                    </div>
+                </div>
+
+                <!-- مین مواد -->
+                <div class="col-md-9 col-lg-10 p-4">
+
+                    <!-- ٹاپ بار -->
+                    <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary">
+                        <div>
+                            <h4 class="fw-bold text-warning mb-1">ڈاکٹر کالونی نارووال</h4>
+                            <span class="text-muted small">خوش آمدید، <span id="currentUserNameDisplay" class="text-light fw-bold"></span></span>
+                        </div>
+                        <div>
+                            <button class="btn btn-gold" onclick="openNewPlotModal()"><i class="fas fa-plus-circle ms-1"></i> نیا پلاٹ شامل کریں</button>
+                        </div>
+                    </div>
+
+                    <!-- فنانشل سمری کارڈز (ہیڈنگز سفید، رقم رنگین) -->
+                    <div id="adminFinancialCardsContainer" class="row g-3 mb-4">
+                        <div class="col-sm-6 col-md-3">
+                            <div class="stat-card">
+                                <span class="dashboard-label">کل پراپرٹی مالیت</span>
+                                <h4 id="statTotalVal" class="mt-2 mb-0 val-gold">Rs. 0</h4>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="stat-card">
+                                <span class="dashboard-label">کل وصول شدہ رقم</span>
+                                <h4 id="statCollectedVal" class="mt-2 mb-0 val-green">Rs. 0</h4>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="stat-card">
+                                <span class="dashboard-label">بقیہ قابلِ وصول</span>
+                                <h4 id="statRemainingVal" class="mt-2 mb-0 val-red">Rs. 0</h4>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="stat-card">
+                                <span class="dashboard-label">کل فعال پلاٹس</span>
+                                <h4 id="statTotalPlots" class="mt-2 mb-0 val-white">0</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 1. پلاٹ انوینٹری -->
+                    <div id="tab-plots" class="tab-pane-pane">
+                        <div class="stat-card mb-4">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+                                <h5 class="text-warning fw-bold m-0"><i class="fas fa-list"></i> پلاٹ انوینٹری</h5>
+                                <div class="d-flex gap-2">
+                                    <select id="plotStatusFilter" class="form-select form-select-sm" onchange="renderPlots()">
+                                        <option value="ALL">تمام پلاٹس دیکھیں (All)</option>
+                                        <option value="Available">صرف دستیاب (Available)</option>
+                                        <option value="Installment">اقساط پر بک (Installment)</option>
+                                        <option value="Sold">مکمل فروخت شدہ (Sold)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-custom align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>پلاٹ نمبر</th>
+                                            <th>خریدار کا نام</th>
+                                            <th>والد کا نام (ولدیت)</th>
+                                            <th>موبائل نمبر</th>
+                                            <th>پتہ</th>
+                                            <th>سائز (مرلہ)</th>
+                                            <th>کل قیمت</th>
+                                            <th>ایڈوانس رقم</th>
+                                            <th>حیثیت</th>
+                                            <th id="thActionHeader">ایکشن</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="plotsTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. بکنگ میپ -->
+                    <div id="tab-booking-map" class="tab-pane-pane d-none">
+                        <div class="stat-card mb-4">
+                            <h5 class="text-warning fw-bold mb-3"><i class="fas fa-th"></i> بکنگ نقشہ (Grid View)</h5>
+                            <div id="bookingGridContainer" class="row g-3"></div>
+                        </div>
+                    </div>
+
+                    <!-- 3. لیجر & وصولی -->
+                    <div id="tab-ledger" class="tab-pane-pane d-none">
+                        <div class="stat-card mb-4">
+                            <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center mb-3">
+                                <h5 class="text-warning fw-bold m-0"><i class="fas fa-book"></i> اقساط وصولی & لیجر مینجمنٹ</h5>
+                                <input type="text" id="searchPlotInput" class="form-control form-control-sm w-auto" placeholder="پلاٹ یا خریدار تلاش کریں..." oninput="searchLedgerPlot()">
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-custom align-middle">
+                                    <thead id="ledgerTableHead">
+                                        <tr>
+                                            <th>پلاٹ نمبر</th>
+                                            <th>خریدار کا نام</th>
+                                            <th>کل رقم</th>
+                                            <th>ایڈوانس رقم</th>
+                                            <th>وصول شدہ رقم</th>
+                                            <th>بقیہ رقم</th>
+                                            <th>ادائیگی لیجر</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ledgerTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. یوزر مینجمنٹ -->
+                    <div id="tab-users" class="tab-pane-pane d-none admin-only-feature">
+                        <div class="stat-card mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="text-warning fw-bold m-0"><i class="fas fa-users"></i> یوزر مینجمنٹ & ایکسیس کنٹرول</h5>
+                                <button class="btn btn-sm btn-gold" onclick="openNewUserModal()"><i class="fas fa-user-plus"></i> نیا یوزر بنائیں</button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-custom align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>نام</th>
+                                            <th>ای میل</th>
+                                            <th>رول (Role)</th>
+                                            <th>سٹیٹس</th>
+                                            <th>ایکشن</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="usersTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. نیا پلاٹ داخل کرنے کا مکمل فارم -->
+    <div class="modal fade" id="plotModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-warning fw-bold">نیا پلاٹ داخل کریں / مکمل معلومات</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="plotForm" onsubmit="saveNewPlot(event)">
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label-custom">پلاٹ نمبر</label>
+                                <input type="text" id="pNo" class="form-control" required placeholder="مثال: Plot-101">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom">بلاک / سیکٹر کا نام</label>
+                                <input type="text" id="pBlock" class="form-control" required placeholder="مثال: Sector A">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom">خریدار کا نام (اگر بکڈ ہو)</label>
+                                <input type="text" id="pBuyer" class="form-control" placeholder="مثال: محمد عثمان">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom">والد کا نام (ولدیت)</label>
+                                <input type="text" id="pFather" class="form-control" placeholder="مثال: محمد شریف">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom">موبائل نمبر (WhatsApp)</label>
+                                <input type="text" id="pPhone" class="form-control" placeholder="مثال: 03008468121">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom">رہائشی پتہ</label>
+                                <input type="text" id="pAddress" class="form-control" placeholder="مثال: نارووال">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label-custom">کل رقبہ (مرلہ / سائز)</label>
+                                <input type="text" id="pSize" class="form-control" required placeholder="مثال: 5 مرلہ">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label-custom">کل قیمت (Rs)</label>
+                                <input type="number" id="pPrice" class="form-control" required min="1" placeholder="مثال: 2500000">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label-custom">پیشگی رقم / ایڈوانس (Rs)</label>
+                                <input type="number" id="pAdvance" class="form-control" required min="0" placeholder="مثال: 500000">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label-custom">سیکیورٹی پن کوڈ (PIN)</label>
+                                <input type="password" id="pPin" class="form-control" required minlength="4" maxlength="8" placeholder="مثال: 3333">
+                            </div>
+                        </div>
+                        <div id="plotFormError" class="text-danger small mt-3 d-none"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">منسوخ کریں</button>
+                        <button type="submit" id="plotSaveBtn" class="btn btn-gold">پلاٹ محفوظ کریں <i class="fas fa-save ms-1"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. قسط ادائیگی موڈل (سیکیورٹی پن کے ساتھ) -->
+    <div class="modal fade" id="paymentModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-warning fw-bold"><i class="fas fa-lock me-1"></i> سیکیورٹی پن (PIN) مانگیں</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <p class="text-light mb-3">وصولی کی تصدیق کے لیے پلاٹ کا سیکیورٹی پن کوڈ درج کریں:</p>
+                    <input type="password" id="inputSecurityPin" class="form-control form-control-lg text-center" placeholder="****" maxlength="8" style="font-size: 1.5rem; letter-spacing: 0.4em;" onkeydown="if(event.key==='Enter') confirmPaymentWithPin()">
+                    <div id="pinErrorMessage" class="text-danger small mt-2 d-none"></div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" id="pinConfirmBtn" class="btn btn-gold px-4" onclick="confirmPaymentWithPin()"><i class="fas fa-check-circle me-1"></i> وصولی کی تصدیق کریں</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. ڈیجیٹل قسط رسید موڈل (پرنٹ / PDF کے لیے) -->
+    <div class="modal fade" id="receiptModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-warning">
+                <div class="modal-header bg-dark border-secondary">
+                    <h5 class="modal-title text-warning fw-bold"><i class="fas fa-receipt me-1"></i> قسط وصولی رسید (Receipt)</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4" id="printableReceiptArea" style="background-color: #ffffff; color: #000000; border-radius: 8px;">
+                    <div class="text-center border-bottom border-2 border-dark pb-3 mb-3">
+                        <h3 class="fw-bold m-0" style="color: #1e293b;">ڈاکٹر کالونی نارووال</h3>
+                        <p class="mb-0 small" style="color:#475569;">پراپرٹی ڈویلپرز & ریئل اسٹیٹ ایڈوائزرز</p>
+                        <small class="fw-bold">رابطہ: 0300-8468121 (محمد عرفان / ایڈمن)</small>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span><strong>رسید نمبر:</strong> <span id="rNo">--</span></span>
+                        <span><strong>تاریخ:</strong> <span id="rDate">--</span></span>
+                    </div>
+                    <hr style="border-color: #000;">
+                    <table class="table table-bordered table-sm text-dark align-middle mb-3" style="border-color: #333;">
+                        <tbody>
+                            <tr>
+                                <th style="width: 35%; background: #f1f5f9;">خریدار کا نام:</th>
+                                <td id="rBuyerName" class="fw-bold">--</td>
+                            </tr>
+                            <tr>
+                                <th style="background: #f1f5f9;">والد کا نام (ولدیت):</th>
+                                <td id="rFatherName">--</td>
+                            </tr>
+                            <tr>
+                                <th style="background: #f1f5f9;">پلاٹ نمبر / بلاک:</th>
+                                <td id="rPlotInfo" class="fw-bold">--</td>
+                            </tr>
+                            <tr>
+                                <th style="background: #f1f5f9;">قسط کا مہینہ:</th>
+                                <td id="rMonth">--</td>
+                            </tr>
+                            <tr>
+                                <th style="background: #f1f5f9;">وصول شدہ رقم:</th>
+                                <td id="rAmount" class="fw-bold text-success fs-5">--</td>
+                            </tr>
+                            <tr>
+                                <th style="background: #f1f5f9;">بقیہ غیر وصول شدہ:</th>
+                                <td id="rRemaining" class="text-danger fw-bold">--</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between align-items-end mt-4 pt-3">
+                        <div class="text-center">
+                            <small class="d-block" style="color:#475569;">دستخط وصول کنندہ</small>
+                            <span class="fw-bold">____________________</span>
+                        </div>
+                        <div class="text-center">
+                            <small class="d-block" style="color:#475569;">مہر & دستخط ایڈمن</small>
+                            <span class="fw-bold" id="rReceivedBy">محمد عثمان (ایڈمن)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-dark border-secondary">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بند کریں</button>
+                    <button type="button" class="btn btn-gold" onclick="printReceipt()"><i class="fas fa-print me-1"></i> رسید پرنٹ کریں / PDF سیو کریں</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. نیا یوزر موڈل -->
+    <div class="modal fade" id="userModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-warning fw-bold">نیا یوزر رجسٹر کریں</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="userForm" onsubmit="saveNewUser(event)">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label-custom">نام (Name)</label>
+                            <input type="text" id="uName" class="form-control" required placeholder="مثال: علی حسن">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-custom">ای میل (Email)</label>
+                            <input type="email" id="uEmail" class="form-control" required placeholder="user@drcolony.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-custom">پاس ورڈ (Password)</label>
+                            <input type="password" id="uPass" class="form-control" required minlength="6" placeholder="******">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-custom">رول (Role)</label>
+                            <select id="uRole" class="form-select">
+                                <option value="user">عام یوزر (User)</option>
+                                <option value="admin">ایڈمن (Admin)</option>
+                            </select>
+                        </div>
+                        <div id="userFormError" class="text-danger small d-none"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">منسوخ</button>
+                        <button type="submit" id="userSaveBtn" class="btn btn-gold">یوزر بنائیں</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastBox"></div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // ایپ کی حالت (ڈیٹا سرور / Netlify Database سے آتا ہے)
+        const appData = {
+            token: localStorage.getItem('drc_token'),
+            currentUser: null,
+            plots: [],
+            users: []
+        };
+
+        let selectedPlotForPayment = null;
+        let selectedMonthForPayment = null;
+        let openLedgerPlotId = null;
+
+        const monthNamesUrdu = [
+            "جنوری 2026", "فروری 2026", "مارچ 2026", "اپریل 2026", "مئی 2026", "جون 2026",
+            "جولائی 2026", "اگست 2026", "ستمبر 2026", "اکتوبر 2026", "نومبر 2026", "دسمبر 2026",
+            "جنوری 2027", "فروری 2027", "مارچ 2027", "اپریل 2027", "مئی 2027", "جون 2027",
+            "جولائی 2027", "اگست 2027", "ستمبر 2027", "اکتوبر 2027", "نومبر 2027", "دسمبر 2027",
+            "جنوری 2028", "فروری 2028", "مارچ 2028", "اپریل 2028", "مئی 2028", "جون 2028",
+            "جولائی 2028", "اگست 2028", "ستمبر 2028", "اکتوبر 2028", "نومبر 2028", "دسمبر 2028"
+        ];
+
+        // ---------- مددگار فنکشنز ----------
+        const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const rs = (n) => 'Rs. ' + Math.round(n || 0).toLocaleString('en-US');
+        const monthlyInst = (p) => p.months > 0 ? Math.round((p.price - p.advance) / p.months) : 0;
+        const paidMonths = (p) => p.payments.map(x => x.month);
+        const paidTotal = (p) => p.advance + p.payments.reduce((s, x) => s + x.amount, 0);
+        const remainingOf = (p) => Math.max(0, p.price - paidTotal(p));
+
+        function toast(msg, isError = false) {
+            const el = document.createElement('div');
+            el.className = 'app-toast' + (isError ? ' error' : '');
+            el.innerHTML = `<i class="fas ${isError ? 'fa-circle-exclamation text-danger' : 'fa-circle-check text-success'} ms-2"></i>${esc(msg)}`;
+            document.getElementById('toastBox').appendChild(el);
+            setTimeout(() => el.remove(), 3500);
+        }
+
+        function showErr(id, msg) {
+            const el = document.getElementById(id);
+            el.textContent = msg;
+            el.classList.toggle('d-none', !msg);
+        }
+
+        async function api(path, options = {}) {
+            const res = await fetch('/api/' + path, {
+                ...options,
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(appData.token ? { Authorization: 'Bearer ' + appData.token } : {})
+                },
+                body: options.body ? JSON.stringify(options.body) : undefined
+            });
+            const data = await res.json().catch(() => ({}));
+            if (res.status === 401 && path !== 'login') {
+                clearSession();
+            }
+            if (!res.ok) throw new Error(data.error || 'کچھ غلط ہو گیا۔');
+            return data;
+        }
+
+        function setBusy(btn, busy) {
+            if (!btn) return;
+            btn.disabled = busy;
+            if (busy) { btn.dataset.html = btn.innerHTML; btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>'; }
+            else if (btn.dataset.html) { btn.innerHTML = btn.dataset.html; }
+        }
+
+        // ---------- 1. لاگ ان ہینڈلر ----------
+        async function handleLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            showErr('loginError', '');
+            setBusy(btn, true);
+            try {
+                const data = await api('login', {
+                    method: 'POST',
+                    body: {
+                        email: document.getElementById('loginEmail').value.trim(),
+                        password: document.getElementById('loginPass').value
+                    }
+                });
+                appData.token = data.token;
+                localStorage.setItem('drc_token', data.token);
+                document.getElementById('loginPass').value = '';
+                await enterDashboard(data.user);
+            } catch (err) {
+                showErr('loginError', err.message);
+            } finally {
+                setBusy(btn, false);
+            }
+        }
+
+        async function enterDashboard(user) {
+            appData.currentUser = user;
+            document.getElementById('loginScreen').classList.add('d-none');
+            document.getElementById('dashboardApp').classList.remove('d-none');
+            document.getElementById('currentUserNameDisplay').textContent = user.name;
+            document.getElementById('userRoleBadge').textContent = user.role === 'admin' ? 'ایڈمن پینل' : 'اسٹاف یوزر';
+            document.querySelectorAll('.admin-only-feature').forEach(el => el.classList.toggle('d-none', user.role !== 'admin'));
+            switchTab('plots');
+            await loadPlots();
+        }
+
+        function clearSession() {
+            appData.token = null;
+            appData.currentUser = null;
+            localStorage.removeItem('drc_token');
+            document.querySelectorAll('.modal.show').forEach(m => bootstrap.Modal.getInstance(m)?.hide());
+            document.getElementById('dashboardApp').classList.add('d-none');
+            document.getElementById('loginScreen').classList.remove('d-none');
+        }
+
+        async function logout() {
+            try { await api('logout', { method: 'POST' }); } catch (_) {}
+            clearSession();
+        }
+
+        async function loadPlots() {
+            try {
+                const data = await api('plots');
+                appData.plots = data.plots;
+                refreshCurrentView();
+            } catch (err) {
+                toast(err.message, true);
+            }
+        }
+
+        // ---------- 2. ٹیب نیویگیشن ----------
+        let activeTab = 'plots';
+        function switchTab(tabId) {
+            activeTab = tabId;
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
+            document.querySelectorAll('.tab-pane-pane').forEach(pane => pane.classList.add('d-none'));
+            const pane = document.getElementById(`tab-${tabId}`);
+            if (tabId !== 'users' || appData.currentUser?.role === 'admin') pane.classList.remove('d-none');
+
+            if (tabId === 'plots') renderPlots();
+            if (tabId === 'booking-map') renderBookingMap();
+            if (tabId === 'ledger') { openLedgerPlotId = null; renderLedger(); }
+            if (tabId === 'users') loadUsers();
+        }
+
+        function refreshCurrentView() {
+            updateDashboard();
+            if (activeTab === 'plots') renderPlots();
+            if (activeTab === 'booking-map') renderBookingMap();
+            if (activeTab === 'ledger') openLedgerPlotId ? renderPlotLedger(openLedgerPlotId) : renderLedger();
+        }
+
+        // ---------- 3. ڈیش بورڈ اعدادوشمار ----------
+        function updateDashboard() {
+            let totalVal = 0, totalCollected = 0;
+            appData.plots.forEach(p => {
+                totalVal += p.price;
+                totalCollected += paidTotal(p);
+            });
+            document.getElementById('statTotalVal').textContent = rs(totalVal);
+            document.getElementById('statCollectedVal').textContent = rs(totalCollected);
+            document.getElementById('statRemainingVal').textContent = rs(totalVal - totalCollected);
+            document.getElementById('statTotalPlots').textContent = appData.plots.length;
+        }
+
+        function statusBadge(status) {
+            if (status === 'Available') return '<span class="badge bg-success">دستیاب</span>';
+            if (status === 'Installment') return '<span class="badge bg-warning text-dark">اقساط پر بک</span>';
+            return '<span class="badge bg-danger">فروخت شدہ</span>';
+        }
+
+        // ---------- 4. پلاٹ انوینٹری ----------
+        function renderPlots() {
+            updateDashboard();
+            const filter = document.getElementById('plotStatusFilter').value;
+            const tbody = document.getElementById('plotsTableBody');
+            const list = appData.plots.filter(p => filter === 'ALL' || p.status === filter);
+
+            if (!list.length) {
+                tbody.innerHTML = '<tr><td colspan="10" class="text-center text-muted py-4">کوئی پلاٹ نہیں ملا۔</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = list.map(p => `
+                <tr>
+                    <td class="fw-bold text-warning">${esc(p.num)} (${esc(p.block)})</td>
+                    <td>${esc(p.buyer) || '---'}</td>
+                    <td>${esc(p.father) || '---'}</td>
+                    <td>${esc(p.phone) || '---'}</td>
+                    <td>${esc(p.address) || '---'}</td>
+                    <td>${esc(p.size)}</td>
+                    <td class="val-gold">${rs(p.price)}</td>
+                    <td class="val-green">${rs(p.advance)}</td>
+                    <td>${statusBadge(p.status)}</td>
+                    <td>
+                        <button class="btn btn-sm btn-gold text-nowrap" onclick="viewPlotLedger(${p.id})"><i class="fas fa-eye me-1"></i> لیجر دیکھیں</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // ---------- 5. نیا پلاٹ ----------
+        function openNewPlotModal() {
+            document.getElementById('plotForm').reset();
+            showErr('plotFormError', '');
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('plotModal')).show();
+        }
+
+        async function saveNewPlot(e) {
+            e.preventDefault();
+            const btn = document.getElementById('plotSaveBtn');
+            showErr('plotFormError', '');
+            setBusy(btn, true);
+            try {
+                const v = id => document.getElementById(id).value;
+                const data = await api('plots', {
+                    method: 'POST',
+                    body: {
+                        num: v('pNo'), block: v('pBlock'), buyer: v('pBuyer'), father: v('pFather'),
+                        phone: v('pPhone'), address: v('pAddress'), size: v('pSize'),
+                        price: Number(v('pPrice')), advance: Number(v('pAdvance')), pin: v('pPin')
+                    }
+                });
+                appData.plots.push(data.plot);
+                bootstrap.Modal.getInstance(document.getElementById('plotModal')).hide();
+                refreshCurrentView();
+                toast('نیا پلاٹ کامیابی سے شامل ہو گیا ہے!');
+            } catch (err) {
+                showErr('plotFormError', err.message);
+            } finally {
+                setBusy(btn, false);
+            }
+        }
+
+        // ---------- 6. لیجر & وصولی ----------
+        function setLedgerSummaryHead(show) {
+            document.getElementById('ledgerTableHead').classList.toggle('d-none', !show);
+            document.getElementById('searchPlotInput').classList.toggle('d-none', !show);
+        }
+
+        function renderLedger() {
+            openLedgerPlotId = null;
+            setLedgerSummaryHead(true);
+            const q = document.getElementById('searchPlotInput').value.trim().toLowerCase();
+            const tbody = document.getElementById('ledgerTableBody');
+            const list = appData.plots.filter(p => !q ||
+                p.num.toLowerCase().includes(q) || p.block.toLowerCase().includes(q) || (p.buyer || '').toLowerCase().includes(q));
+
+            if (!list.length) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-4">کوئی ریکارڈ نہیں ملا۔</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = list.map(p => `
+                <tr>
+                    <td class="fw-bold text-warning">${esc(p.num)} (${esc(p.block)})</td>
+                    <td>${esc(p.buyer) || 'غیر نامزد'}</td>
+                    <td class="val-gold">${rs(p.price)}</td>
+                    <td class="val-green">${rs(p.advance)}</td>
+                    <td class="val-green">${rs(paidTotal(p))}</td>
+                    <td class="val-red">${rs(remainingOf(p))}</td>
+                    <td>
+                        <button class="btn btn-sm btn-gold text-nowrap" onclick="viewPlotLedger(${p.id})"><i class="fas fa-calculator me-1"></i> اقساط و لیجر</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function searchLedgerPlot() { renderLedger(); }
+
+        function viewPlotLedger(plotId) {
+            if (activeTab !== 'ledger') switchTab('ledger');
+            renderPlotLedger(plotId);
+        }
+
+        function whatsappLink(p, amount) {
+            let phone = (p.phone || '').replace(/\D/g, '');
+            if (phone.startsWith('0')) phone = '92' + phone.slice(1);
+            const text = `سلام ${p.buyer || ''}، آپ کی قسط Rs.${amount.toLocaleString('en-US')} قابلِ ادائیگی ہے۔ - ڈاکٹر کالونی نارووال`;
+            return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+        }
+
+        function renderPlotLedger(plotId) {
+            const p = appData.plots.find(x => x.id === plotId);
+            if (!p) return renderLedger();
+            openLedgerPlotId = plotId;
+            setLedgerSummaryHead(false);
+
+            const tbody = document.getElementById('ledgerTableBody');
+            const inst = monthlyInst(p);
+            const paid = paidMonths(p);
+
+            let rows = `
+                <tr class="table-active">
+                    <td colspan="7" class="p-3">
+                        <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center mb-2">
+                            <h5 class="text-warning m-0"><i class="fas fa-file-invoice"></i> قسط وار لیجر - ${esc(p.num)} (${esc(p.buyer) || 'غیر نامزد'})</h5>
+                            <button class="btn btn-sm btn-secondary" onclick="renderLedger()">واپس مکمل لسٹ</button>
+                        </div>
+                        <div class="small text-light"><strong>موبائل:</strong> ${esc(p.phone) || 'N/A'} | <strong>ولدیت:</strong> ${esc(p.father) || 'N/A'} | <strong>پتہ:</strong> ${esc(p.address) || 'N/A'}</div>
+                        <div class="small mt-2"><strong class="text-light">کل:</strong> <span class="val-gold">${rs(p.price)}</span> &nbsp;|&nbsp; <strong class="text-light">وصول شدہ:</strong> <span class="val-green">${rs(paidTotal(p))}</span> &nbsp;|&nbsp; <strong class="text-light">بقیہ:</strong> <span class="val-red">${rs(remainingOf(p))}</span> &nbsp;|&nbsp; <strong class="text-light">اقساط ادا:</strong> <span class="val-white">${paid.length} / ${p.months}</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>قسط #</th>
+                    <th>مہینہ</th>
+                    <th>مطلوبہ رقم</th>
+                    <th>حیثیت</th>
+                    <th>وصولی / ایکشن</th>
+                    <th>رسید</th>
+                    <th>نوٹیفکیشن</th>
+                </tr>
+            `;
+
+            for (let i = 1; i <= p.months; i++) {
+                const isPaid = paid.includes(i);
+                rows += `
+                    <tr>
+                        <td>${i}</td>
+                        <td>${monthNamesUrdu[i - 1] || 'قسط ' + i}</td>
+                        <td class="val-gold">${rs(inst)}</td>
+                        <td>${isPaid ? '<span class="badge bg-success">وصول شدہ</span>' : '<span class="badge bg-warning text-dark">قابلِ وصول</span>'}</td>
+                        <td>
+                            ${isPaid
+                                ? '<button class="btn btn-sm btn-outline-success disabled text-nowrap"><i class="fas fa-check"></i> ادا شدہ</button>'
+                                : `<button class="btn btn-sm btn-gold text-nowrap" onclick="openPaymentModal(${p.id}, ${i})"><i class="fas fa-hand-holding-usd me-1"></i> وصولی کی تصدیق کریں</button>`}
+                        </td>
+                        <td>
+                            ${isPaid
+                                ? `<button class="btn btn-sm btn-success text-nowrap" onclick="openReceipt(${p.id}, ${i})"><i class="fas fa-print me-1"></i> رسید</button>`
+                                : '<span class="text-muted small">---</span>'}
+                        </td>
+                        <td>
+                            ${p.phone && !isPaid
+                                ? `<a href="${esc(whatsappLink(p, inst))}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-success text-nowrap"><i class="fab fa-whatsapp me-1"></i> واٹس ایپ</a>`
+                                : '<span class="text-muted small">---</span>'}
+                        </td>
+                    </tr>
+                `;
+            }
+
+            tbody.innerHTML = rows;
+        }
+
+        // ---------- 7. سیکیورٹی پن موڈل اور تصدیق ----------
+        function openPaymentModal(plotId, monthIndex) {
+            selectedPlotForPayment = plotId;
+            selectedMonthForPayment = monthIndex;
+            document.getElementById('inputSecurityPin').value = '';
+            showErr('pinErrorMessage', '');
+            const el = document.getElementById('paymentModal');
+            bootstrap.Modal.getOrCreateInstance(el).show();
+            el.addEventListener('shown.bs.modal', () => document.getElementById('inputSecurityPin').focus(), { once: true });
+        }
+
+        async function confirmPaymentWithPin() {
+            const pin = document.getElementById('inputSecurityPin').value;
+            if (!pin) return showErr('pinErrorMessage', 'براہ کرم پن کوڈ درج کریں۔');
+            const btn = document.getElementById('pinConfirmBtn');
+            setBusy(btn, true);
+            try {
+                // پن کی تصدیق سرور پر ہوتی ہے — درست پن کبھی براؤزر کو نہیں بھیجا جاتا
+                const data = await api(`plots/${selectedPlotForPayment}/payments`, {
+                    method: 'POST',
+                    body: { month: selectedMonthForPayment, pin }
+                });
+                appData.plots = data.plots;
+                bootstrap.Modal.getInstance(document.getElementById('paymentModal')).hide();
+                refreshCurrentView();
+                toast('قسط کی وصولی کامیابی سے درج ہو گئی!');
+                openReceipt(selectedPlotForPayment, selectedMonthForPayment);
+            } catch (err) {
+                showErr('pinErrorMessage', err.message);
+            } finally {
+                setBusy(btn, false);
+            }
+        }
+
+        // ---------- 8. رسید ----------
+        function openReceipt(plotId, monthIndex) {
+            const p = appData.plots.find(x => x.id === plotId);
+            if (!p) return;
+            const pay = p.payments.find(x => x.month === monthIndex);
+            if (!pay) return;
+
+            // اس قسط تک کی ادائیگیوں کے بعد بقیہ رقم
+            const paidUpTo = p.advance + p.payments.filter(x => x.month <= monthIndex).reduce((s, x) => s + x.amount, 0);
+
+            document.getElementById('rNo').textContent = pay.receiptNo;
+            document.getElementById('rDate').textContent = new Date(pay.paidAt).toLocaleDateString('ur-PK');
+            document.getElementById('rBuyerName').textContent = p.buyer || 'خریدار';
+            document.getElementById('rFatherName').textContent = p.father || '---';
+            document.getElementById('rPlotInfo').textContent = `${p.num} (${p.block})`;
+            document.getElementById('rMonth').textContent = monthNamesUrdu[monthIndex - 1] || `قسط نمبر ${monthIndex}`;
+            document.getElementById('rAmount').textContent = rs(pay.amount);
+            document.getElementById('rRemaining').textContent = rs(Math.max(0, p.price - paidUpTo));
+            document.getElementById('rReceivedBy').textContent = pay.receivedBy || 'ایڈمن';
+
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('receiptModal')).show();
+        }
+
+        function printReceipt() {
+            const content = document.getElementById('printableReceiptArea').outerHTML;
+            const printWindow = window.open('', '', 'height=600,width=800');
+            if (!printWindow) return toast('براہ کرم پاپ اپ کی اجازت دیں۔', true);
+            printWindow.document.write(`
+                <html lang="ur" dir="rtl">
+                <head>
+                    <title>قسط رسید - ڈاکٹر کالونی نارووال</title>
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+                    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+                    <style>body { font-family: 'Tajawal', sans-serif; padding: 20px; background: #fff; color: #000; }</style>
+                </head>
+                <body onload="setTimeout(function(){ window.print(); window.close(); }, 400);">
+                    ${content}
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+        }
+
+        // ---------- 9. بکنگ نقشہ ----------
+        function renderBookingMap() {
+            updateDashboard();
+            const container = document.getElementById('bookingGridContainer');
+            if (!appData.plots.length) {
+                container.innerHTML = '<div class="col-12 text-center text-muted py-4">کوئی پلاٹ نہیں ملا۔</div>';
+                return;
+            }
+            container.innerHTML = appData.plots.map(p => {
+                let cls = 'available', text = 'دستیاب';
+                if (p.status === 'Installment') { cls = 'installment'; text = 'اقساط پر بک'; }
+                else if (p.status === 'Sold') { cls = 'sold'; text = 'فروخت شدہ'; }
+                return `
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                        <div class="grid-plot ${cls}" onclick="viewPlotLedger(${p.id})">
+                            <h6 class="fw-bold text-warning mb-1">${esc(p.num)}</h6>
+                            <small class="d-block text-light">${esc(p.size)} · ${esc(p.block)}</small>
+                            <small class="d-block fw-bold mt-1">${text}</small>
+                        </div>
+                    </div>`;
+            }).join('');
+        }
+
+        // ---------- 10. یوزر مینجمنٹ ----------
+        async function loadUsers() {
+            try {
+                const data = await api('users');
+                appData.users = data.users;
+                renderUsers();
+            } catch (err) {
+                toast(err.message, true);
+            }
+        }
+
+        function renderUsers() {
+            const tbody = document.getElementById('usersTableBody');
+            tbody.innerHTML = appData.users.map(u => `
+                <tr>
+                    <td class="fw-bold">${esc(u.name)}</td>
+                    <td>${esc(u.email)}</td>
+                    <td><span class="badge ${u.role === 'admin' ? 'bg-warning text-dark' : 'bg-info'}">${u.role === 'admin' ? 'ایڈمن' : 'اسٹاف یوزر'}</span></td>
+                    <td><span class="badge bg-success">${esc(u.status)}</span></td>
+                    <td>
+                        ${u.id === appData.currentUser?.id
+                            ? '<span class="text-muted small">(آپ)</span>'
+                            : `<button class="btn btn-sm btn-outline-danger" onclick="deleteUser(${u.id})"><i class="fas fa-trash"></i> ڈیلیٹ</button>`}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openNewUserModal() {
+            document.getElementById('userForm').reset();
+            showErr('userFormError', '');
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('userModal')).show();
+        }
+
+        async function saveNewUser(e) {
+            e.preventDefault();
+            const btn = document.getElementById('userSaveBtn');
+            showErr('userFormError', '');
+            setBusy(btn, true);
+            try {
+                const data = await api('users', {
+                    method: 'POST',
+                    body: {
+                        name: document.getElementById('uName').value,
+                        email: document.getElementById('uEmail').value,
+                        password: document.getElementById('uPass').value,
+                        role: document.getElementById('uRole').value
+                    }
+                });
+                appData.users.push(data.user);
+                bootstrap.Modal.getInstance(document.getElementById('userModal')).hide();
+                renderUsers();
+                toast('نیا یوزر کامیابی سے شامل ہو گیا!');
+            } catch (err) {
+                showErr('userFormError', err.message);
+            } finally {
+                setBusy(btn, false);
+            }
+        }
+
+        async function deleteUser(id) {
+            if (!confirm('کیا آپ اس یوزر کو ڈیلیٹ کرنا چاہتے ہیں؟')) return;
+            try {
+                await api(`users/${id}`, { method: 'DELETE' });
+                appData.users = appData.users.filter(u => u.id !== id);
+                renderUsers();
+                toast('یوزر ڈیلیٹ ہو گیا۔');
+            } catch (err) {
+                toast(err.message, true);
+            }
+        }
+
+        // ---------- محفوظ سیشن بحال کریں ----------
+        (async function restoreSession() {
+            if (!appData.token) return;
+            try {
+                const data = await api('me');
+                await enterDashboard(data.user);
+            } catch (_) {
+                clearSession();
+            }
+        })();
+    </script>
+</body>
+</html>
